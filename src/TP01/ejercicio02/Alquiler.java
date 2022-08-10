@@ -56,4 +56,8 @@ public class Alquiler {
         this.barco = barco;
     }
 
+    public int calcularValor(int valorFijo) {
+        return ((fechaInicial.restarDias(fechaFinal) * barco.calcularModulo()) + valorFijo);
+    }
+
 }

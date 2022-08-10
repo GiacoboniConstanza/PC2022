@@ -42,5 +42,8 @@ public class Barco {
     public void setAnioFabricacion(int anioFabricacion) {
         this.anioFabricacion = anioFabricacion;
     }
-    
+ 
+    public int calcularModulo(){
+        return eslora * 10;
+    }
 }

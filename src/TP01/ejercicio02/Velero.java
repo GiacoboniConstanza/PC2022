@@ -8,7 +8,8 @@ package TP01.ejercicio02;
  *
  * @author cotyg
  */
-public class Velero extends Barco{
+public class Velero extends Barco {
+
     private int nroMastil;
 
     public Velero(int nroMastil, String matricula, int eslora, int anioFabricacion) {
@@ -23,5 +24,8 @@ public class Velero extends Barco{
     public void setNroMastil(int nroMastil) {
         this.nroMastil = nroMastil;
     }
-    
+
+    public int calcularModulo() {
+        return super.calcularModulo() + nroMastil;
+    }
 }

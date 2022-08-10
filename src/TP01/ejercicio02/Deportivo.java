@@ -8,7 +8,8 @@ package TP01.ejercicio02;
  *
  * @author cotyg
  */
-public class Deportivo extends Barco{
+public class Deportivo extends Barco {
+
     private int potencia;
 
     public Deportivo(int potencia, String matricula, int eslora, int anioFabricacion) {
@@ -23,5 +24,9 @@ public class Deportivo extends Barco{
     public void setPotencia(int potencia) {
         this.potencia = potencia;
     }
-    
+
+    public int calcularModulo() {
+        return super.calcularModulo() + potencia;
+    }
+
 }

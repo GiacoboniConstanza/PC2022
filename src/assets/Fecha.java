@@ -77,4 +77,18 @@ public class Fecha {
     public String toString() {
         return dia + "/" + mes + "/" + anio;
     }
+
+    public int restarDias(Fecha fechaFinal) {
+        int dias = 0;
+        if (this.anio == fechaFinal.getAnio()) {
+            if (this.mes == fechaFinal.getMes()) {
+                dias = fechaFinal.getDia() - this.dia;
+            } else if (this.mes < fechaFinal.getMes()) {
+                //terminar
+                //
+                //
+            }
+        }
+        return dias;
+    }
 }

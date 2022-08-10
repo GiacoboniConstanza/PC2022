@@ -8,7 +8,8 @@ package TP01.ejercicio02;
  *
  * @author cotyg
  */
-public class Yate extends Deportivo{
+public class Yate extends Deportivo {
+
     private int nroCamarotes;
 
     public Yate(int nroCamarotes, int potencia, String matricula, int eslora, int anioFabricacion) {
@@ -23,5 +24,8 @@ public class Yate extends Deportivo{
     public void setNroCamarotes(int nroCamarotes) {
         this.nroCamarotes = nroCamarotes;
     }
-    
+
+    public int calcularModulo() {
+        return super.calcularModulo() + nroCamarotes;
+    }
 }
