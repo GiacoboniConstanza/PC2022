@@ -10,7 +10,7 @@ package TP02.ejercicio04;
  */
 public class ThreadEjemplo implements Runnable {
 
-    String nombreHilo;
+    private String nombreHilo;
 
     public ThreadEjemplo(String nombreHilo) {
         this.nombreHilo = nombreHilo;
@@ -30,7 +30,7 @@ public class ThreadEjemplo implements Runnable {
     public static void main(String[] args) {
         ThreadEjemplo hilo1 = new ThreadEjemplo("Maria");
         ThreadEjemplo hilo2 = new ThreadEjemplo("Jose");
-
+        
         Thread h1 = new Thread(hilo1);
         Thread h2 = new Thread(hilo2);
 
