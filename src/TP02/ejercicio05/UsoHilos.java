@@ -16,11 +16,21 @@ public class UsoHilos {
         mh.unHilo("1");
         Thread nuevoHilo = new Thread(mh);
         nuevoHilo.start();
+        /*MiHilo mh2 = new MiHilo();
+        mh2.unHilo("2");
+        Thread nuevoHilo2 = new Thread(mh2);
+        nuevoHilo2.start();
+        MiHilo mh3 = new MiHilo();
+        mh3.unHilo("3");
+        Thread nuevoHilo3 = new Thread(mh3);
+        nuevoHilo3.start();*/
         for (int i = 0; i < 50; i++) {
-            System.out.println(" .");
+            System.out.print(" .");
         }
         try {
             Thread.sleep(100);
+            //nuevoHilo.sleep(1000);
+            //el metodo sleep() es estatico y solo afecta al hilo actual, no importa que lo llame otro
         } catch (InterruptedException e) {
             System.out.println("Hilo principal interrumpido.");
         }
@@ -39,5 +49,8 @@ Hilo principal finalizado
 
 b)el main(), siempre termina al final o puede suceder que termine antes que el run()?
 por que sucede esto?
+puede terminar antes por el planificador del cpu
 
-*/
+d) hacer 3 hilos y ejecutarlos, que ocurre? se ejecutan en orden?
+los hilos no se ejecutan en orden por el indeterminismo debido al planificador del cpu
+ */
