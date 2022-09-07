@@ -19,4 +19,8 @@ public class Vida {
     public synchronized void modificarVida(int n) {
         vida += n;
     }
+
+    public int getVida() {
+        return this.vida;
+    }
 }
