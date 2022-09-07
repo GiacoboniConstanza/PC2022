@@ -1,3 +1,9 @@
+package TP02.ejercicio06;
+
+
+import TP02.ejercicio06.CajeroRunnable;
+import TP02.ejercicio06.CajeroRunnable;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Other/File.java to edit this template
