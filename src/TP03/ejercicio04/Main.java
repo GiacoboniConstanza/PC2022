@@ -8,11 +8,9 @@ package TP03.ejercicio04;
  *
  * @author Coqui
  */
-public class Plato {
+public class Main {
 
-    private boolean ocupada = false;
+    public static void main(String[] args) {
 
-    public synchronized void comer() {
-        System.out.println("🍎🍎🍎");
     }
 }

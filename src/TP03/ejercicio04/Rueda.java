@@ -9,5 +9,10 @@ package TP03.ejercicio04;
  * @author Coqui
  */
 public class Rueda {
-    
+
+    private boolean ocupada = false;
+
+    public synchronized void correr() {
+        System.out.println("🏃‍️🏃‍️🏃‍");
+    }
 }

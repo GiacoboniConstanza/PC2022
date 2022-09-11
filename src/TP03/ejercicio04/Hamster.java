@@ -9,5 +9,17 @@ package TP03.ejercicio04;
  * @author Coqui
  */
 public class Hamster {
+    private Hamaca hamaca;
+    private Plato plato;
+    private Rueda rueda;
+
+    public Hamster(Hamaca hamaca, Plato plato, Rueda rueda) {
+        this.hamaca = hamaca;
+        this.plato = plato;
+        this.rueda = rueda;
+    }
     
+    public void run(){
+        
+    }
 }
