@@ -15,6 +15,9 @@ public class Sala {
     public synchronized void reservar(int pos) {
         if (!asientos[pos]) {
             asientos[pos] = true;
+            System.out.println(Thread.currentThread().getName() + " --> Reservado con exito");
+        } else {
+            System.out.println(Thread.currentThread().getName() + " --> No pudo reservarse");
         }
     }
 }

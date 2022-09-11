@@ -4,18 +4,24 @@
  */
 package TP03.ejercicio03;
 
+import java.util.Scanner;
+
 /**
  *
  * @author cotyg
  */
-public class Encargado extends Thread{
+public class Encargado extends Thread {
+    
     private Sala sala;
-
+    
     public Encargado(Sala sala) {
         this.sala = sala;
     }
     
-    public void run(){
-        
+    public void run() {
+        System.out.println(getName() + " --> Elija un asiento del 0 al 9");
+        Scanner sc = new Scanner(System.in);
+        int asiento = sc.nextInt();
+        sala.reservar(asiento);
     }
 }
