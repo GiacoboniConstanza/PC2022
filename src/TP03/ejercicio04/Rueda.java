@@ -12,7 +12,16 @@ public class Rueda {
 
     private boolean ocupada = false;
 
+    public boolean estaOcupado() {
+        return ocupada;
+    }
+
+    public void usar() {
+        ocupada = true;
+    }
+
     public synchronized void correr() {
-        System.out.println("🏃‍️🏃‍️🏃‍");
+        System.out.println(Thread.currentThread().getName() + " 🏃‍️🏃‍️🏃‍");
+        ocupada = false;
     }
 }
