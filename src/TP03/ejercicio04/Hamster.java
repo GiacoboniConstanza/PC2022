@@ -51,7 +51,6 @@ public class Hamster extends Thread {
                 break;
             case 3:
                 if (hamaca.estaOcupado()) {
-                    hamaca.usar();
                     hamaca.dormir();
                     try {
                         Thread.sleep(1000);

@@ -16,12 +16,10 @@ public class Hamaca {
         return ocupada;
     }
 
-    public void usar() {
-        ocupada = true;
-    }
-
     public synchronized void dormir() {
-        System.out.println(Thread.currentThread().getName() + " 🌟🌙🌟");
-        ocupada = false;
+        if(!estaOcupado()){
+            System.out.println(Thread.currentThread().getName() + " 🌟🌙🌟");
+            ocupada = true;
+        }
     }
 }
