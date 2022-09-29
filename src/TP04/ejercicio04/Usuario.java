@@ -23,12 +23,12 @@ public class Usuario implements Runnable {
             case 'a':
                 imprimirA();
                 break;
-            /*case 'b':
+            case 'b':
                 imprimirB();
                 break;
             case 'x':
                 imprimirX();
-                break;*/
+                break;
             default:
                 System.out.println("elegi bien, kpo");
                 break;
@@ -38,5 +38,13 @@ public class Usuario implements Runnable {
 
     private void imprimirA() {
         centro.imprimirA();
+    }
+    
+    private void imprimirB() {
+        centro.imprimirB();
+    }
+    
+    private void imprimirX() {
+        centro.imprimirX();
     }
 }
