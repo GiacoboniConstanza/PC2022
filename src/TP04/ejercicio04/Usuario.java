@@ -13,8 +13,9 @@ public class Usuario implements Runnable {
     private char tipo;
     private CentroDeImpresoras centro;
 
-    public Usuario(char tipo) {
+    public Usuario(char tipo, CentroDeImpresoras c) {
         this.tipo = tipo;
+        this.centro = c;
     }
 
     public void run() {

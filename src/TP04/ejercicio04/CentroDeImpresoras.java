@@ -15,11 +15,11 @@ public class CentroDeImpresoras {
     private Impresora[] impresoraA;
     private Impresora[] impresoraB;
 
-    /* public CentroDeImpresoras(Impresora[] impresoraA, Impresora[] impresoraB) {
+    public CentroDeImpresoras(Impresora[] impresoraA, Impresora[] impresoraB) {
         this.impresoraA = impresoraA;
         this.impresoraB = impresoraB;
     }
-     */
+
     public void imprimirA() {
         int cant = impresoraA.length;
         int i = 0;
@@ -27,7 +27,7 @@ public class CentroDeImpresoras {
         do {
             if (impresoraA[i].intentarImprimir()) {
                 noSePudo = false;
-                imprimiendoA(i);
+                imprimiendo(i, 'A');
             } else {
                 i++;
             }
@@ -35,13 +35,7 @@ public class CentroDeImpresoras {
 
         Random random = new Random();
         int pos = random.nextInt((cant - 0 + 1) + 0);
-        imprimiendoA(pos);
-    }
-
-    private void imprimiendoA(int p) {
-        impresoraA[p].usar();
-        System.out.println("Imprimiendo");
-        impresoraA[p].terminar();
+        imprimiendo(pos, 'A');
     }
 
     public void imprimirB() {
@@ -51,7 +45,7 @@ public class CentroDeImpresoras {
         do {
             if (impresoraB[i].intentarImprimir()) {
                 noSePudo = false;
-                imprimiendoB(i);
+                imprimiendo(i, 'B');
             } else {
                 i++;
             }
@@ -59,12 +53,12 @@ public class CentroDeImpresoras {
 
         Random random = new Random();
         int pos = random.nextInt((cant - 0 + 1) + 0);
-        imprimiendoB(pos);
+        imprimiendo(pos, 'B');
     }
 
-    private void imprimiendoB(int p) {
+    private void imprimiendo(int p, char tipo) {
         impresoraB[p].usar();
-        System.out.println("Imprimiendo");
+        System.out.println("Imprimiendo " + tipo);
         impresoraB[p].terminar();
     }
 
@@ -75,7 +69,7 @@ public class CentroDeImpresoras {
         do {
             if (impresoraA[i].intentarImprimir()) {
                 noSePudo = false;
-                imprimiendoA(i);
+                imprimiendo(i, 'X');
             } else {
                 i++;
             }
@@ -87,14 +81,14 @@ public class CentroDeImpresoras {
             do {
                 if (impresoraB[i].intentarImprimir()) {
                     noSePudo = false;
-                    imprimiendoB(i);
+                    imprimiendo(i, 'X');
                 } else {
                     i++;
                 }
             } while (!noSePudo && cant < i);
             Random random = new Random();
             int pos = random.nextInt((cant - 0 + 1) + 0);
-            imprimiendoB(pos);
+            imprimiendo(pos, 'X');
         }
     }
 }
