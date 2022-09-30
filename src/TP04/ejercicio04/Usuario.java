@@ -19,7 +19,6 @@ public class Usuario implements Runnable {
     }
 
     public void run() {
-        tipo = java.lang.Character.toLowerCase(tipo);
         switch (tipo) {
             case 'a':
                 imprimirA();
@@ -40,11 +39,11 @@ public class Usuario implements Runnable {
     private void imprimirA() {
         centro.imprimirA();
     }
-    
+
     private void imprimirB() {
         centro.imprimirB();
     }
-    
+
     private void imprimirX() {
         centro.imprimirX();
     }

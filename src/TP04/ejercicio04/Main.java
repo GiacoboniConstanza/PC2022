@@ -14,10 +14,12 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        
         System.out.println("Elija una cantidad de impresoras A");
         int cantA = sc.nextInt();
         System.out.println("Elija una cantidad de impresoras B");
         int cantB = sc.nextInt();
+        
         Impresora[] impA = new Impresora[cantA];
         Impresora[] impB = new Impresora[cantB];
 
@@ -33,7 +35,7 @@ public class Main {
 
         Usuario[] usuarios = new Usuario[5];
         for (int i = 0; i < 5; i++) {
-            usuarios[i] = new Usuario('a', centro);
+            usuarios[i] = new Usuario('x', centro);
         }
 
         Thread[] hilosUsu = new Thread[5];

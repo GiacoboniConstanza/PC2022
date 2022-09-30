@@ -16,12 +16,10 @@ public class Impresora {
 
     private char tipo;
     private Semaphore semDisponible;
-    private Semaphore semImprimiendo;
-
+    
     public Impresora(char tipo) {
         this.tipo = tipo;
         this.semDisponible = new Semaphore(1, true);
-        this.semImprimiendo = new Semaphore(0);
     }
 
     public char getTipo() {
@@ -45,6 +43,6 @@ public class Impresora {
     }
     
     public boolean intentarImprimir(){
-        return this.semDisponible.tryAcquire();
+        return (this.semDisponible.tryAcquire());
     }
 }

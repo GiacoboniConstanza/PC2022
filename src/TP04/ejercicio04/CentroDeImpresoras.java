@@ -5,6 +5,9 @@
 package TP04.ejercicio04;
 
 import java.util.Random;
+import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -14,6 +17,7 @@ public class CentroDeImpresoras {
 
     private Impresora[] impresoraA;
     private Impresora[] impresoraB;
+    Semaphore semBuscando = new Semaphore(1);
 
     public CentroDeImpresoras(Impresora[] impresoraA, Impresora[] impresoraB) {
         this.impresoraA = impresoraA;
@@ -21,44 +25,70 @@ public class CentroDeImpresoras {
     }
 
     public void imprimirA() {
+        try {
+            semBuscando.acquire();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(CentroDeImpresoras.class.getName()).log(Level.SEVERE, null, ex);
+        }
         int cant = impresoraA.length;
         int i = 0;
         boolean noSePudo = true;
-        do {
+        while (noSePudo && i < cant) {
             if (impresoraA[i].intentarImprimir()) {
                 noSePudo = false;
-                imprimiendo(i, 'A');
+                semBuscando.release();
+                imprimiendoTryA(i);
             } else {
                 i++;
             }
-        } while (!noSePudo && cant < i);
+        }
 
-        Random random = new Random();
-        int pos = random.nextInt((cant - 0 + 1) + 0);
-        imprimiendo(pos, 'A');
+        if (noSePudo) {
+            Random random = new Random();
+            int pos = random.nextInt((cant - 0) + 0);
+            semBuscando.release();
+            imprimiendoA(pos);
+        }
+    }
+
+    private void imprimiendoA(int p) {
+        impresoraA[p].usar();
+        System.out.println(Thread.currentThread().getName() + "Imprimiendo A");
+        impresoraA[p].terminar();
+    }
+
+    private void imprimiendoTryA(int p) {
+        System.out.println(Thread.currentThread().getName() + " Imprimiendo A");
+        impresoraA[p].terminar();
     }
 
     public void imprimirB() {
         int cant = impresoraB.length;
         int i = 0;
         boolean noSePudo = true;
-        do {
+        while (noSePudo && i < cant) {
             if (impresoraB[i].intentarImprimir()) {
                 noSePudo = false;
-                imprimiendo(i, 'B');
+                imprimiendoTryB(i);
             } else {
                 i++;
             }
-        } while (!noSePudo && cant < i);
-
-        Random random = new Random();
-        int pos = random.nextInt((cant - 0 + 1) + 0);
-        imprimiendo(pos, 'B');
+        }
+        if (noSePudo) {
+            Random random = new Random();
+            int pos = random.nextInt((cant - 0) + 0);
+            imprimiendoB(pos);
+        }
     }
 
-    private void imprimiendo(int p, char tipo) {
+    private void imprimiendoB(int p) {
         impresoraB[p].usar();
-        System.out.println("Imprimiendo " + tipo);
+        System.out.println(Thread.currentThread().getName() + " Imprimiendo B");
+        impresoraB[p].terminar();
+    }
+
+    private void imprimiendoTryB(int p) {
+        System.out.println(Thread.currentThread().getName() + " Imprimiendo B");
         impresoraB[p].terminar();
     }
 
@@ -66,29 +96,31 @@ public class CentroDeImpresoras {
         int cant = impresoraA.length;
         int i = 0;
         boolean noSePudo = true;
-        do {
+        while (noSePudo && i < cant) {
             if (impresoraA[i].intentarImprimir()) {
                 noSePudo = false;
-                imprimiendo(i, 'X');
+                imprimiendoTryA(i);
             } else {
                 i++;
             }
-        } while (!noSePudo && cant < i);
+        }
 
-        if (!noSePudo) {
+        if (noSePudo) {
             cant = impresoraB.length;
             i = 0;
-            do {
+            while (noSePudo && i < cant) {
                 if (impresoraB[i].intentarImprimir()) {
                     noSePudo = false;
-                    imprimiendo(i, 'X');
+                    imprimiendoTryB(i);
                 } else {
                     i++;
                 }
-            } while (!noSePudo && cant < i);
-            Random random = new Random();
-            int pos = random.nextInt((cant - 0 + 1) + 0);
-            imprimiendo(pos, 'X');
+            }
+            if (noSePudo) {
+                Random random = new Random();
+                int pos = random.nextInt((cant - 0) + 0);
+                imprimiendoB(pos);
+            }
         }
     }
 }
