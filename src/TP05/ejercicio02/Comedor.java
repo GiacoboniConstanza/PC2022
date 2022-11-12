@@ -9,8 +9,7 @@ public class Comedor {
 	HashMap<String, Contador> contador = new HashMap<String, Contador>();
 	
 	public void comer(String tipo) {
-		//if(contador.get(tipo,) > 0) {
-			
-		//}
+		Contador unContador = contador.get(tipo);
+		
 	}
 }

@@ -15,4 +15,8 @@ public class Contador {
 	public int getComiendo() {
 		return comiendo;
 	}
+
+	public int getEsperando(){
+		return esperando;
+	}
 }
