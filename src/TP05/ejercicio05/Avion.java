@@ -14,8 +14,8 @@ public class Avion implements Runnable{
         while(!pudo){
             try {
                 unaPista.usar();
-                System.out.println(Thread.currentThread().getName() + " VA A USAR LA PISTA");
                 if(tipo=='a'){
+                    System.out.println(Thread.currentThread().getName() + " VA A USAR LA PISTA PARA ATERRIZAR");
                     if(unaPista.aterrizar()){
                         pudo = true;
                         unaPista.liberar();
@@ -24,6 +24,7 @@ public class Avion implements Runnable{
                         unaPista.esperaAterrizaje();
                     }
                 }else{
+                    System.out.println(Thread.currentThread().getName() + " VA A USAR LA PISTA PARA DESPEGAR");
                     if(unaPista.despegar()){
                         pudo = true;
                         unaPista.liberar();
