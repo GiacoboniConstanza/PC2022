@@ -22,6 +22,7 @@ public class Pista {
             exito = true;
             System.out.println(Thread.currentThread().getName() + " PUDO ATERRIZAR");
             if(aterrizajeEspera>0){
+                System.out.println("libero una espera en aterrizaje");
                 semAterrizar.release();
                 aterrizajeEspera--;
             }
@@ -36,6 +37,7 @@ public class Pista {
 
     public boolean despegar(){
         boolean exito = false;
+        //falta condicion para ver si ya no hay mas aterrizajes, asi puede despegar igual
         if(puedeDespegar){
             exito = true;
             aterrizajes = 0;
@@ -44,6 +46,7 @@ public class Pista {
             System.out.println("");
             System.out.println(Thread.currentThread().getName() + " PUDO DESPEGAR");
             if(despegueEspera>0){
+                System.out.println("libero una espera de despegue");
                 semDespegar.release();
                 despegueEspera--;
             }
