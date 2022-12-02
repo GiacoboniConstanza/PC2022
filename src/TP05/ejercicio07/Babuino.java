@@ -2,8 +2,8 @@ package TP05.ejercicio07;
 
 public class Babuino implements Runnable{
     private Cuerda unaCuerda;
-    private boolean cruzo = false;
     private char direccion;
+    private boolean cruzo = false;
 
     public Babuino(Cuerda cuerda, char direccion){
         this.unaCuerda = cuerda;
@@ -14,23 +14,19 @@ public class Babuino implements Runnable{
         while(!cruzo){
             try {
                 if(direccion == 'd'){
-                    if(unaCuerda.cruzarDerecha()) {
-                        //System.out.println(Thread.currentThread().getName() + " LOGRO CRUZAR DERECHA.");
+                    if(unaCuerda.subirDerecha()){
+                        Thread.sleep(2000);
+                        unaCuerda.bajarDerecha();
                         cruzo = true;
-                        //Thread.sleep(1000);
-                        unaCuerda.salirDerecha();
                     }else{
-                        System.out.println(Thread.currentThread().getName() + " NO PUDO CRUZAR DERECHA.");
                         unaCuerda.esperaDerecha();
                     }
                 }else{
-                    if(unaCuerda.cruzarIzquierda()){
-                        //System.out.println(Thread.currentThread().getName() + " LOGRO CRUZAR IZQUIERDA.");
+                    if(unaCuerda.subirIzquierda()){
+                        Thread.sleep(2000);
+                        unaCuerda.bajarIzquierda();
                         cruzo = true;
-                        //Thread.sleep(1000);
-                        unaCuerda.salirIzquierda();
                     }else{
-                        System.out.println(Thread.currentThread().getName() + " NO PUDO CRUZAR IZQUIERDA.");
                         unaCuerda.esperaIzquierda();
                     }
                 } 

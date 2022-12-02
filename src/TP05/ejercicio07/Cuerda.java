@@ -2,117 +2,125 @@ package TP05.ejercicio07;
 import java.util.concurrent.Semaphore;
 
 public class Cuerda {
+    /* Char de prioridad
+    * n --> ninguno
+    * d --> derecha
+    * i --> izquierda
+    */
+    private char ladoPrioridad = 'n';
+    private int cantMaxima = 5;
+    private int cruzando = 0;
     private int esperaDerecha = 0;
     private int esperaIzquierda = 0;
-    private int cantCruzando = 0;
-    private char ladoPrioridad = 'd';
-    private Semaphore capacidad = new Semaphore(5);
-    private Semaphore semEsperaDerecha = new Semaphore(1,true);
-    private Semaphore semEsperaIzquierda = new Semaphore(1, true);
-    private Semaphore mutexCruzando = new Semaphore(1, true);
-    private Semaphore mutexPrioridad = new Semaphore(1, true);
-    private Semaphore mutexEspera = new Semaphore(1, true);
-    public Cuerda(){
+    private Semaphore semDerecha = new Semaphore(1, true);
+    private Semaphore semIzquierda = new Semaphore(1, true);
+    private Semaphore mutexCuerda = new Semaphore(1, true);
 
-    }
-
-    public boolean cruzarDerecha() throws InterruptedException{
+    public boolean subirDerecha() throws InterruptedException{
         boolean exito = false;
-        mutexPrioridad.acquire();
-        System.out.println(Thread.currentThread().getName() + " INTENTA CRUZAR DERECHA.");
-        if(ladoPrioridad == 'd'){
-            mutexPrioridad.release();
-            if(cantCruzando < 5){
-                capacidad.acquire();
-                mutexCruzando.acquire();
-                cantCruzando++;
-                mutexCruzando.release();
-                exito = true;
-            }
-        }else{
-            mutexPrioridad.release();
-        }
-        return exito;
-    }
-
-    public boolean cruzarIzquierda() throws InterruptedException{
-        boolean exito = false;
-        mutexPrioridad.acquire();
-        System.out.println(Thread.currentThread().getName() + " INTENTA CRUZAR IZQUIERDA.");
-        if(ladoPrioridad == 'i'){
-            mutexPrioridad.release();
-            if(cantCruzando < 5){
-                capacidad.acquire();
-                mutexCruzando.acquire();
-                cantCruzando++;
-                mutexCruzando.release();
-                exito = true;
-            }
-        }else{
-            mutexPrioridad.release();
-        }
-        return exito;
-    }
-
-    public void salirDerecha() throws InterruptedException{
-        capacidad.release();
-        mutexCruzando.acquire();
-        cantCruzando--;
-        System.out.println(Thread.currentThread().getName() + " TERMINO DE CRUZAR DERECHA.");
-        //hacer un if grande para si soy el ultimo
-        //if(ultimo)
-        //pregunto si hay esperando del otro lado
-        //pregunto x los de mi lado
-        //si no hay nadie cambio la prioridad a una tercer letra
-        
-        if(cantCruzando == 0 && esperaIzquierda > 0){
-            mutexCruzando.release();
-            mutexPrioridad.acquire();
-            System.out.println("SE CAMBIO LA PRIORIDAD >>IZQUIERDA<<");
-            ladoPrioridad = 'i';
-            mutexPrioridad.release();
-        }else{
-            mutexCruzando.release();
-            mutexEspera.acquire();
-            if(esperaDerecha>0){
-                System.out.println("SE LIBERA UNA ESPERA DE DERECHA");
-                semEsperaDerecha.release();
-                //esperaDerecha--;
-            }
-            mutexEspera.release();
-        }
-    }
-
-    public void salirIzquierda() throws InterruptedException{
-        capacidad.release();
-        mutexCruzando.acquire();
-        cantCruzando--;
-        System.out.println(Thread.currentThread().getName() + " TERMINO DE CRUZAR IZQUIERDA.");
-        mutexCruzando.release();
-        if(cantCruzando == 0 && esperaDerecha > 0 && ladoPrioridad== 'i'){
-            mutexPrioridad.acquire();
-            System.out.println("SE CAMBIO LA PRIORIDAD >>DERECHA<<");
+        mutexCuerda.acquire();
+        if(ladoPrioridad == 'n'){
             ladoPrioridad = 'd';
-            mutexPrioridad.release();
+            cruzando++;
+            exito = true;
+            System.out.println(">> Primer babuino derecha cruzando.("+Thread.currentThread().getName()+")");
+            mutexCuerda.release();
+        }else if(ladoPrioridad == 'd' && cruzando <= cantMaxima){
+            cruzando++;
+            exito = true;
+            System.out.println(">> Babuino derecha cruzando. ("+Thread.currentThread().getName()+")");
+            mutexCuerda.release();
         }else{
-            mutexEspera.acquire();
-            if(esperaIzquierda>0 && ladoPrioridad == 'i'){
-                System.out.println("SE LIBERA UNA ESPERA DE IZQUIERDA");
-                semEsperaIzquierda.release();
-                //esperaIzquierda--;
-            }
-            mutexEspera.release();
+            esperaDerecha++;
+            mutexCuerda.release();
         }
+        return exito;
     }
 
     public void esperaDerecha() throws InterruptedException{
+        mutexCuerda.acquire();
         esperaDerecha++;
-        semEsperaDerecha.acquire();
+        System.out.println(">> Babuino derecha esperando.("+Thread.currentThread().getName()+")");
+        mutexCuerda.release();
+
+        semDerecha.acquire();
+
+        mutexCuerda.acquire();
         esperaDerecha--;
+        System.out.println(">> Babuino derecha liberado("+Thread.currentThread().getName()+")");
+        mutexCuerda.release();
+    }
+
+    public void bajarDerecha() throws InterruptedException{
+        mutexCuerda.acquire();
+        cruzando--;
+        if(cruzando == 0){ 
+            if(esperaIzquierda > 0){
+                ladoPrioridad = 'i';
+                System.out.println("Ultimo babuino derecha cambia prioridad para IZQUIERDA("+Thread.currentThread().getName()+")");
+                semIzquierda.release();
+            }else if(esperaDerecha > 0){
+                System.out.println("Ultimo babuino derecha libera espera("+Thread.currentThread().getName()+")");
+                semDerecha.release();
+            }else if(esperaDerecha == 0 && esperaIzquierda == 0){
+                System.out.println("Ultimo babuino derecha cambia prioridad para NADIE("+Thread.currentThread().getName()+")");
+                ladoPrioridad = 'n';
+            }
+        }
+        mutexCuerda.release();
+    }
+
+    public boolean subirIzquierda() throws InterruptedException{
+        boolean exito = false;
+        mutexCuerda.acquire();
+        if(ladoPrioridad == 'n'){
+            ladoPrioridad = 'i';
+            cruzando++;
+            System.out.println(">> Primer babuino izquierda cruzando.("+Thread.currentThread().getName()+")");
+            exito = true;
+            mutexCuerda.release();
+        }else if(ladoPrioridad == 'i' && cruzando <= cantMaxima){
+            cruzando++;
+            exito = true;
+            System.out.println(">> Babuino izquierda cruzando.("+Thread.currentThread().getName()+")");
+            mutexCuerda.release();
+        }else{
+            esperaIzquierda++;
+            mutexCuerda.release();
+        }
+        return exito;
     }
 
     public void esperaIzquierda() throws InterruptedException{
-        semEsperaIzquierda.acquire();
+        mutexCuerda.acquire();
         esperaIzquierda++;
+        System.out.println(">> Babuino izquierda esperando.("+Thread.currentThread().getName()+")");
+        mutexCuerda.release();
+
+        semIzquierda.acquire();
+        
+        mutexCuerda.acquire();
+        esperaIzquierda--;
+        System.out.println(">> Babuino izquierda liberado("+Thread.currentThread().getName()+")");
+        mutexCuerda.release();
+    }
+
+    public void bajarIzquierda() throws InterruptedException{
+        mutexCuerda.acquire();
+        cruzando--;
+        if(cruzando == 0){
+            if(esperaDerecha > 0){
+                ladoPrioridad = 'd';
+                System.out.println("Ultimo babuino izquierda cambia prioridad para DERECHA("+Thread.currentThread().getName()+")");
+                semDerecha.release();
+            }else if(esperaIzquierda > 0){
+                System.out.println("Ultimo babuino izquierda libera espera("+Thread.currentThread().getName()+")");
+                semIzquierda.release();
+            }else if(esperaDerecha == 0 && esperaIzquierda == 0){
+                System.out.println("Ultimo babuino izquierda cambia prioridad para NADIE("+Thread.currentThread().getName()+")");
+                ladoPrioridad = 'n';
+            }
+        }
+        mutexCuerda.release();
     }
 }
